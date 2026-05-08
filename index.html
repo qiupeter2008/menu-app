@@ -42,15 +42,21 @@
     border-radius: 14px;
     border: 0.5px solid rgba(0,0,0,0.1);
     padding: 14px 18px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
   }
-  .date-banner .date-main { font-size: 22px; font-weight: 500; color: #27500A; }
-  .date-banner .date-sub { font-size: 13px; color: #5f5e5a; }
+  .date-banner-left .date-main { font-size: 22px; font-weight: 500; color: #27500A; }
+  .date-banner-left .date-sub { font-size: 13px; color: #5f5e5a; }
+  .confirm-badge {
+    font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .confirm-badge.confirmed { background: #EAF3DE; color: #27500A; border: 0.5px solid #639922; }
+  .confirm-badge.pending { background: #FAEEDA; color: #854F0B; border: 0.5px solid #BA7517; }
 
-  .dish-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .dish-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   .dish-card {
     background: #fff;
     border-radius: 14px;
@@ -58,7 +64,12 @@
     padding: 16px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .dish-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .dish-card.locked { cursor: default; }
+  .dish-card.locked:hover { transform: none; box-shadow: none; }
   .dish-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0;
@@ -68,33 +79,28 @@
   .dish-card.meat::before { background: #D85A30; }
   .dish-card.veg::before { background: #639922; }
   .dish-card-label {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 8px;
-    margin-top: 4px;
+    font-size: 11px; font-weight: 500;
+    padding: 2px 8px; border-radius: 20px;
+    display: inline-block; margin-bottom: 8px; margin-top: 4px;
   }
   .dish-card.meat .dish-card-label { background: #FAECE7; color: #993C1D; }
   .dish-card.veg .dish-card-label { background: #EAF3DE; color: #3B6D11; }
+  .dish-emoji { font-size: 28px; margin-bottom: 6px; display: block; }
   .dish-name { font-size: 16px; font-weight: 500; color: #2c2c2a; margin-bottom: 4px; }
   .dish-desc { font-size: 12px; color: #888780; line-height: 1.5; }
-  .dish-emoji { font-size: 28px; margin-bottom: 6px; display: block; }
   .dish-avg-score {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #5f5e5a;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    margin-top: 10px; font-size: 12px; color: #5f5e5a;
+    display: flex; align-items: center; gap: 4px;
   }
   .score-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #FAC775;
-    display: inline-block;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #FAC775; display: inline-block;
   }
+  .swap-hint {
+    margin-top: 8px; font-size: 11px; color: #888780;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .dish-card.locked .swap-hint { display: none; }
 
   .rating-section {
     background: #fff;
@@ -103,171 +109,97 @@
     padding: 18px;
     margin-bottom: 16px;
   }
-  .rating-section h2 {
-    font-size: 14px;
-    font-weight: 500;
-    color: #2c2c2a;
-    margin-bottom: 14px;
-  }
+  .rating-section h2 { font-size: 14px; font-weight: 500; color: #2c2c2a; margin-bottom: 14px; }
 
-  .user-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
+  .user-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
   .user-tab {
-    flex: 1;
-    padding: 8px;
-    border-radius: 10px;
-    border: 0.5px solid rgba(0,0,0,0.15);
-    background: #fff;
-    cursor: pointer;
-    text-align: center;
-    font-size: 13px;
-    color: #5f5e5a;
-    transition: all 0.15s;
+    flex: 1; padding: 8px; border-radius: 10px;
+    border: 0.5px solid rgba(0,0,0,0.15); background: #fff;
+    cursor: pointer; text-align: center; font-size: 13px;
+    color: #5f5e5a; transition: all 0.15s;
   }
-  .user-tab.active {
-    background: #EAF3DE;
-    border-color: #639922;
-    color: #27500A;
-    font-weight: 500;
-  }
+  .user-tab.active { background: #EAF3DE; border-color: #639922; color: #27500A; font-weight: 500; }
 
-  .rating-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
+  .rating-group { margin-bottom: 14px; }
+  .rating-group-title {
+    font-size: 12px; color: #888780; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
   }
-  .rating-row-label {
-    font-size: 13px;
-    color: #444441;
-    width: 80px;
-    flex-shrink: 0;
+  .dish-type-tag {
+    font-size: 11px; padding: 1px 6px; border-radius: 10px; font-weight: 500;
   }
-  .stars {
-    display: flex;
-    gap: 4px;
-  }
+  .dish-type-tag.meat { background: #FAECE7; color: #993C1D; }
+  .dish-type-tag.veg { background: #EAF3DE; color: #3B6D11; }
+  .rating-row { display: flex; align-items: center; gap: 10px; }
+  .stars { display: flex; gap: 4px; }
   .star {
-    width: 28px; height: 28px;
-    cursor: pointer;
-    border-radius: 6px;
+    width: 28px; height: 28px; cursor: pointer; border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    border: 0.5px solid rgba(0,0,0,0.12);
-    background: #F1EFE8;
-    transition: all 0.1s;
-    user-select: none;
+    font-size: 16px; border: 0.5px solid rgba(0,0,0,0.12);
+    background: #F1EFE8; transition: all 0.1s; user-select: none;
   }
   .star.active { background: #FAEEDA; border-color: #EF9F27; }
   .star:hover { background: #FAC775; border-color: #EF9F27; transform: scale(1.1); }
-  .rating-val {
-    font-size: 16px;
-    font-weight: 500;
-    color: #BA7517;
-    width: 36px;
-    text-align: center;
-  }
+  .rating-val { font-size: 16px; font-weight: 500; color: #BA7517; width: 30px; text-align: center; }
+  .rating-saved { font-size: 11px; color: #639922; margin-left: 4px; }
 
-  .save-btn {
-    width: 100%;
-    padding: 12px;
-    background: #639922;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 4px;
+  .confirm-btn-main {
+    width: 100%; padding: 14px; background: #639922; color: #fff;
+    border: none; border-radius: 12px; font-size: 15px; font-weight: 500;
+    cursor: pointer; margin-bottom: 10px; letter-spacing: 1px;
   }
-  .save-btn:hover { background: #3B6D11; }
-  .save-btn:active { transform: scale(0.98); }
+  .confirm-btn-main:hover { background: #3B6D11; }
+  .confirm-btn-main:active { transform: scale(0.98); }
+  .confirm-btn-main:disabled { background: #ccc; cursor: default; transform: none; }
 
-  .toast {
-    position: fixed;
-    bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
-    background: #2c2c2a;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 13px;
-    opacity: 0;
-    transition: all 0.3s;
-    z-index: 999;
-    pointer-events: none;
+  .confirm-btn-save {
+    width: 100%; padding: 12px; background: #185FA5; color: #fff;
+    border: none; border-radius: 12px; font-size: 14px; font-weight: 500;
+    cursor: pointer; margin-top: 10px;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .confirm-btn-save:hover { background: #0c447c; }
+
+  .dish-rating-summary {
+    display: flex; flex-direction: column; gap: 6px;
+    background: #f9f7f3; border-radius: 8px; padding: 10px 12px; margin-top: 4px;
+  }
+  .dish-rating-summary-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .dish-rating-summary-row .user-label { color: #888780; width: 40px; }
+  .dish-rating-summary-row .user-score { color: #BA7517; font-weight: 500; min-width: 24px; }
 
   .history-section {
-    background: #fff;
-    border-radius: 14px;
+    background: #fff; border-radius: 14px;
     border: 0.5px solid rgba(0,0,0,0.1);
-    padding: 18px;
-    margin-bottom: 16px;
+    padding: 18px; margin-bottom: 16px;
   }
   .history-section h2 { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
-  .history-toggle {
-    font-size: 13px; color: #639922; cursor: pointer;
-    text-decoration: underline;
-  }
-
-  .top-dishes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .top-dish-item {
-    background: #F1EFE8;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    font-size: 12px;
-  }
+  .history-toggle { font-size: 13px; color: #639922; cursor: pointer; text-decoration: underline; }
+  .top-dishes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+  .top-dish-item { background: #F1EFE8; border-radius: 10px; padding: 10px; text-align: center; font-size: 12px; }
   .top-dish-item .top-dish-emoji { font-size: 22px; display: block; margin-bottom: 4px; }
   .top-dish-item .top-dish-name { color: #2c2c2a; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .top-dish-item .top-dish-score { color: #BA7517; margin-top: 2px; }
-
   .history-list { margin-top: 12px; }
-  .history-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 0.5px solid rgba(0,0,0,0.07);
-    font-size: 13px;
-  }
+  .history-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.07); font-size: 13px; }
   .history-item:last-child { border-bottom: none; }
-  .history-date { color: #888780; width: 72px; flex-shrink: 0; }
-  .history-dishes { flex: 1; color: #444441; }
-  .history-scores { color: #BA7517; font-size: 12px; white-space: nowrap; }
+  .history-date { color: #888780; width: 68px; flex-shrink: 0; }
+  .history-scores { flex: 1; color: #BA7517; font-size: 12px; }
 
-  .refresh-btn {
-    width: 100%;
-    padding: 10px;
-    background: #fff;
-    color: #639922;
-    border: 0.5px solid #639922;
-    border-radius: 10px;
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: 8px;
+  .toast {
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #2c2c2a; color: #fff;
+    padding: 10px 20px; border-radius: 20px;
+    font-size: 13px; opacity: 0; transition: all 0.3s;
+    z-index: 999; pointer-events: none;
   }
-  .refresh-btn:hover { background: #EAF3DE; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .user-name-input {
-    background: transparent;
-    border: none;
+    background: transparent; border: none;
     border-bottom: 1px dashed rgba(0,0,0,0.2);
-    font-size: 13px;
-    color: #2c2c2a;
-    width: 56px;
-    text-align: center;
-    outline: none;
-    padding: 0 2px;
+    font-size: 13px; color: #2c2c2a;
+    width: 56px; text-align: center; outline: none; padding: 0 2px;
   }
   .user-name-input:focus { border-bottom-color: #639922; }
 
@@ -280,7 +212,7 @@
 <body>
 
 <div class="header">
-  <div class="header-icon">🍱</div>
+  <div class="header-icon">&#x1F371;</div>
   <div>
     <h1>小学生每日菜谱</h1>
     <p>荤素搭配 · 营养均衡</p>
@@ -290,39 +222,56 @@
 <div class="container">
 
   <div class="date-banner">
-    <div>
+    <div class="date-banner-left">
       <div class="date-main" id="dateMain"></div>
       <div class="date-sub" id="dateSub"></div>
     </div>
+    <div class="confirm-badge pending" id="confirmBadge">待确认</div>
   </div>
 
-  <div class="dish-cards" id="dishCards">
-    <!-- dynamically filled -->
-  </div>
+  <div class="dish-cards" id="dishCards"></div>
+
+  <button class="confirm-btn-main" id="confirmBtnMain" onclick="confirmMenu()">确认今日菜谱</button>
 
   <div class="rating-section">
     <h2>今日评分</h2>
     <div class="user-tabs">
-      <div class="user-tab active" id="tab0" onclick="switchUser(0)">
-        <span id="name0-display">天天</span>
+      <div class="user-tab active" id="tab0" onclick="switchUser(0)"><span id="name0-display">天天</span></div>
+      <div class="user-tab" id="tab1" onclick="switchUser(1)"><span id="name1-display">青蛙</span></div>
+    </div>
+
+    <div class="rating-group" id="ratingGroup0">
+      <div class="rating-group-title">
+        <span class="dish-type-tag meat" id="dish0TypeTag">荤菜</span>
+        <span id="dish0NameLabel"></span>
       </div>
-      <div class="user-tab" id="tab1" onclick="switchUser(1)">
-        <span id="name1-display">青蛙</span>
+      <div class="rating-row">
+        <span style="width:64px;flex-shrink:0;display:flex;align-items:center;gap:4px;">
+          <input class="user-name-input" id="ratingLabel0" value="天天" onchange="updateUserName(0, this.value)" maxlength="6">
+        </span>
+        <div class="stars" id="stars0"></div>
+        <div class="rating-val" id="val0">-</div>
+        <span class="rating-saved" id="saved0"></span>
       </div>
     </div>
 
-    <div class="rating-row">
-      <div class="rating-row-label" id="ratingLabel0"></div>
-      <div class="stars" id="stars0"></div>
-      <div class="rating-val" id="val0">-</div>
-    </div>
-    <div class="rating-row">
-      <div class="rating-row-label" id="ratingLabel1"></div>
-      <div class="stars" id="stars1"></div>
-      <div class="rating-val" id="val1">-</div>
+    <div class="rating-group" id="ratingGroup1">
+      <div class="rating-group-title">
+        <span class="dish-type-tag veg" id="dish1TypeTag">素菜</span>
+        <span id="dish1NameLabel"></span>
+      </div>
+      <div class="rating-row">
+        <span style="width:64px;flex-shrink:0;display:flex;align-items:center;gap:4px;">
+          <input class="user-name-input" id="ratingLabel1" value="青蛙" onchange="updateUserName(1, this.value)" maxlength="6">
+        </span>
+        <div class="stars" id="stars1"></div>
+        <div class="rating-val" id="val1">-</div>
+        <span class="rating-saved" id="saved1"></span>
+      </div>
     </div>
 
-    <button class="save-btn" onclick="saveRatings()">保存今日评分</button>
+    <div class="dish-rating-summary" id="dishRatingSummary"></div>
+    <button class="confirm-btn-save" onclick="saveRatings()">保存评分</button>
   </div>
 
   <div class="history-section">
@@ -335,315 +284,380 @@
     <div class="history-list" id="historyList" style="display:none;"></div>
   </div>
 
-  <button class="refresh-btn" onclick="refreshDishes()">换一换今日菜谱</button>
-
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const DISHES = [
-  { id: 1, name: "红烧肉", type: "meat", emoji: "🥩", desc: "软糯入味，富含蛋白质" },
-  { id: 2, name: "糖醋排骨", type: "meat", emoji: "🍖", desc: "酸甜可口，小朋友最爱" },
-  { id: 3, name: "清蒸鱼", type: "meat", emoji: "🐟", desc: "鲜嫩清淡，DHA 丰富" },
-  { id: 4, name: "番茄炒蛋", type: "meat", emoji: "🍳", desc: "经典家常，营养均衡" },
-  { id: 5, name: "黄焖鸡", type: "meat", emoji: "🍗", desc: "鲜嫩多汁，香气十足" },
-  { id: 6, name: "宫保鸡丁", type: "meat", emoji: "🫚", desc: "微辣鲜香，儿童版少辣" },
-  { id: 7, name: "蒸蛋羹", type: "meat", emoji: "🥚", desc: "嫩滑细腻，易消化" },
-  { id: 8, name: "虾仁豆腐", type: "meat", emoji: "🦐", desc: "高钙高蛋白，清鲜可口" },
-  { id: 9, name: "照烧鸡腿", type: "meat", emoji: "🍗", desc: "甜咸平衡，孩子爱吃" },
-  { id: 10, name: "猪肝炒菠菜", type: "meat", emoji: "🥩", desc: "补铁补血，适合发育期" },
-  { id: 11, name: "炒三丝", type: "meat", emoji: "🥢", desc: "猪肉配蔬菜，均衡搭配" },
-  { id: 12, name: "红烧鱼块", type: "meat", emoji: "🐠", desc: "浓郁入味，刺少好吃" },
-
-  { id: 13, name: "清炒西兰花", type: "veg", emoji: "🥦", desc: "营养丰富，抗氧化强" },
-  { id: 14, name: "蒜蓉菠菜", type: "veg", emoji: "🥬", desc: "补铁补钙，清淡爽口" },
-  { id: 15, name: "番茄豆腐汤", type: "veg", emoji: "🍅", desc: "酸甜开胃，钙质丰富" },
-  { id: 16, name: "炒胡萝卜", type: "veg", emoji: "🥕", desc: "β-胡萝卜素护眼睛" },
-  { id: 17, name: "香菇炒白菜", type: "veg", emoji: "🍄", desc: "鲜香爽脆，增强免疫" },
-  { id: 18, name: "地三鲜", type: "veg", emoji: "🫑", desc: "土豆茄子柿椒，下饭神器" },
-  { id: 19, name: "凉拌黄瓜", type: "veg", emoji: "🥒", desc: "清爽解腻，夏日首选" },
-  { id: 20, name: "南瓜粥配炒青菜", type: "veg", emoji: "🎃", desc: "护胃养胃，色泽金黄" },
-  { id: 21, name: "白灼生菜", type: "veg", emoji: "🥗", desc: "清淡健康，蘸蒜蓉汁" },
-  { id: 22, name: "玉米炒松仁", type: "veg", emoji: "🌽", desc: "香甜脆嫩，孩子最爱" },
-  { id: 23, name: "蒸南瓜", type: "veg", emoji: "🥧", desc: "软糯香甜，维生素丰富" },
-  { id: 24, name: "木耳炒鸡蛋", type: "veg", emoji: "🍳", desc: "清脆爽滑，补血养颜" },
+var DISHES = [
+  {id:1,name:"红烧肉",type:"meat",emoji:"🥩",desc:"软糯入味，富含蛋白质"},
+  {id:2,name:"糖醋排骨",type:"meat",emoji:"🍖",desc:"酸甜可口，小朋友最爱"},
+  {id:3,name:"清蒸鱼",type:"meat",emoji:"🐟",desc:"鲜嫩清淡，DHA 丰富"},
+  {id:4,name:"番茄炒蛋",type:"meat",emoji:"🍳",desc:"经典家常，营养均衡"},
+  {id:5,name:"黄焖鸡",type:"meat",emoji:"🍗",desc:"鲜嫩多汁，香气十足"},
+  {id:6,name:"宫保鸡丁",type:"meat",emoji:"🫚",desc:"微辣鲜香，儿童版少辣"},
+  {id:7,name:"蒸蛋羹",type:"meat",emoji:"🥚",desc:"嫩滑细腻，易消化"},
+  {id:8,name:"虾仁豆腐",type:"meat",emoji:"🦐",desc:"高钙高蛋白，清鲜可口"},
+  {id:9,name:"照烧鸡腿",type:"meat",emoji:"🍗",desc:"甜咸平衡，孩子爱吃"},
+  {id:10,name:"猪肝炒菠菜",type:"meat",emoji:"🥩",desc:"补铁补血，适合发育期"},
+  {id:11,name:"炒三丝",type:"meat",emoji:"🥢",desc:"猪肉配蔬菜，均衡搭配"},
+  {id:12,name:"红烧鱼块",type:"meat",emoji:"🐠",desc:"浓郁入味，刺少好吃"},
+  {id:13,name:"清炒西兰花",type:"veg",emoji:"🥦",desc:"营养丰富，抗氧化强"},
+  {id:14,name:"蒜蓉菠菜",type:"veg",emoji:"🥬",desc:"补铁补钙，清淡爽口"},
+  {id:15,name:"番茄豆腐汤",type:"veg",emoji:"🍅",desc:"酸甜开胃，钙质丰富"},
+  {id:16,name:"炒胡萝卜",type:"veg",emoji:"🥕",desc:"β-胡萝卜素护眼睛"},
+  {id:17,name:"香菇炒白菜",type:"veg",emoji:"🍄",desc:"鲜香爽脆，增强免疫"},
+  {id:18,name:"地三鲜",type:"veg",emoji:"🫑",desc:"土豆茄子柿椒，下饭神器"},
+  {id:19,name:"凉拌黄瓜",type:"veg",emoji:"🥒",desc:"清爽解腻，夏日首选"},
+  {id:20,name:"南瓜粥配炒青菜",type:"veg",emoji:"🎃",desc:"护胃养胃，色泽金黄"},
+  {id:21,name:"白灼生菜",type:"veg",emoji:"🥗",desc:"清淡健康，蘸蒜蓉汁"},
+  {id:22,name:"玉米炒松仁",type:"veg",emoji:"🌽",desc:"香甜脆嫩，孩子最爱"},
+  {id:23,name:"蒸南瓜",type:"veg",emoji:"🥧",desc:"软糯香甜，维生素丰富"},
+  {id:24,name:"木耳炒鸡蛋",type:"veg",emoji:"🍳",desc:"清脆爽滑，补血养颜"},
 ];
 
-const MEAT_DISHES = DISHES.filter(d => d.type === "meat");
-const VEG_DISHES = DISHES.filter(d => d.type === "veg");
+var MEAT_DISHES = DISHES.filter(function(d){return d.type==="meat";});
+var VEG_DISHES = DISHES.filter(function(d){return d.type==="veg";});
 
-let state = {
-  userNames: ["天天", "青蛙"],
+var state = {
+  userNames:["天天","青蛙"],
   today: getToday(),
-  todayMenu: null,
-  ratings: {},   // { "YYYY-MM-DD": { userId: { dish0: score, dish1: score } } }
-  dishScores: {}, // { dishId: [score, ...] } cumulative
-  currentUser: 0,
-  currentRatings: { 0: { d0: 0, d1: 0 }, 1: { d0: 0, d1: 0 } }
+  todayMenu:null,
+  confirmed:false,
+  ratings:{},
+  dishScores:{},
+  currentUser:0,
+  currentRatings:{0:{d0:0,d1:0},1:{d0:0,d1:0}}
 };
 
-function getToday() {
-  const d = new Date();
-  return d.toISOString().slice(0, 10);
-}
+function getToday(){var d=new Date();return d.toISOString().slice(0,10);}
 
-function loadState() {
-  try {
-    const s = localStorage.getItem("menuApp_state");
-    if (s) {
-      const saved = JSON.parse(s);
-      state.userNames = saved.userNames || ["天天", "青蛙"];
-      state.ratings = saved.ratings || {};
-      state.dishScores = saved.dishScores || {};
-      if (saved.todayMenu && saved.todayDate === state.today) {
-        state.todayMenu = saved.todayMenu;
+function loadState(){
+  try{
+    var s=localStorage.getItem("menuApp_state_v2");
+    if(s){
+      var saved=JSON.parse(s);
+      state.userNames=saved.userNames||["天天","青蛙"];
+      state.ratings=saved.ratings||{};
+      state.dishScores=saved.dishScores||{};
+      state.confirmed=saved.confirmed||false;
+      if(saved.todayMenu&&saved.todayDate===state.today){
+        state.todayMenu=saved.todayMenu;
+      } else {
+        state.confirmed=false;
       }
     }
-  } catch(e) {}
+  } catch(e){}
 }
 
-function saveStateToStorage() {
-  const toSave = {
-    userNames: state.userNames,
-    ratings: state.ratings,
-    dishScores: state.dishScores,
-    todayMenu: state.todayMenu,
-    todayDate: state.today,
+function saveStateToStorage(){
+  var toSave={
+    userNames:state.userNames,
+    ratings:state.ratings,
+    dishScores:state.dishScores,
+    todayMenu:state.todayMenu,
+    todayDate:state.today,
+    confirmed:state.confirmed
   };
-  localStorage.setItem("menuApp_state", JSON.stringify(toSave));
+  localStorage.setItem("menuApp_state_v2",JSON.stringify(toSave));
 }
 
-function getDishWeight(dish) {
-  const scores = state.dishScores[dish.id];
-  if (!scores || scores.length === 0) return 1;
-  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-  return Math.max(0.1, avg / 5);
+function getDishWeight(dish){
+  var scores=state.dishScores[dish.id];
+  if(!scores||scores.length===0)return 1;
+  var sum=scores.reduce(function(a,b){return a+b;},0);
+  return Math.max(0.1,sum/scores.length/5);
 }
 
-function weightedRandom(dishes) {
-  const weights = dishes.map(d => getDishWeight(d));
-  const total = weights.reduce((a, b) => a + b, 0);
-  let r = Math.random() * total;
-  for (let i = 0; i < dishes.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return dishes[i];
+function weightedRandom(dishes,excludeIds){
+  var pool=dishes.filter(function(d){return excludeIds.indexOf(d.id)===-1;});
+  if(pool.length===0)pool=dishes;
+  var weights=pool.map(function(d){return getDishWeight(d);});
+  var total=weights.reduce(function(a,b){return a+b;},0);
+  var r=Math.random()*total;
+  for(var i=0;i<pool.length;i++){
+    r-=weights[i];
+    if(r<=0)return pool[i];
   }
-  return dishes[dishes.length - 1];
+  return pool[pool.length-1];
 }
 
-function pickTodayMenu(forceNew) {
-  if (!forceNew && state.todayMenu) return;
-  let m1 = weightedRandom(MEAT_DISHES);
-  let v1 = weightedRandom(VEG_DISHES);
-  state.todayMenu = [m1, v1];
+function pickTodayMenu(forceNew){
+  if(!forceNew&&state.todayMenu)return;
+  state.todayMenu=[weightedRandom(MEAT_DISHES,[]),weightedRandom(VEG_DISHES,[])];
 }
 
-function renderDate() {
-  const d = new Date();
-  const days = ["周日","周一","周二","周三","周四","周五","周六"];
-  const months = d.getMonth() + 1;
-  const dateStr = `${d.getFullYear()}年${months}月${d.getDate()}日`;
-  document.getElementById("dateMain").textContent = dateStr;
-  document.getElementById("dateSub").textContent = days[d.getDay()] + "  今日菜谱已推荐";
+function computeDishAvg(dishId){
+  var scores=state.dishScores[dishId];
+  if(!scores||scores.length===0)return null;
+  return scores.reduce(function(a,b){return a+b;},0)/scores.length;
 }
 
-function renderDishes() {
-  const menu = state.todayMenu;
-  let html = "";
-  menu.forEach((dish, i) => {
-    const avgScores = computeDishAvg(dish.id);
-    let avgStr = "";
-    if (avgScores !== null) {
-      avgStr = `<div class="dish-avg-score"><span class="score-dot"></span> 历史均分 ${avgScores.toFixed(1)}</div>`;
-    }
-    html += `<div class="dish-card ${dish.type}">
-      <div class="dish-card-label">${dish.type === "meat" ? "荤菜" : "素菜"}</div>
-      <span class="dish-emoji">${dish.emoji}</span>
-      <div class="dish-name">${dish.name}</div>
-      <div class="dish-desc">${dish.desc}</div>
-      ${avgStr}
-    </div>`;
-  });
-  document.getElementById("dishCards").innerHTML = html;
+function renderDate(){
+  var d=new Date();
+  var days=["周日","周一","周二","周三","周四","周五","周六"];
+  var dateStr=d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
+  document.getElementById("dateMain").textContent=dateStr;
+  document.getElementById("dateSub").textContent=days[d.getDay()]+"  今日菜谱已推荐";
 }
 
-function computeDishAvg(dishId) {
-  const scores = state.dishScores[dishId];
-  if (!scores || scores.length === 0) return null;
-  return scores.reduce((a, b) => a + b, 0) / scores.length;
-}
-
-function renderUserNames() {
-  for (let i = 0; i < 2; i++) {
-    document.getElementById(`name${i}-display`).textContent = state.userNames[i];
-    document.getElementById(`ratingLabel${i}`).innerHTML =
-      `<input class="user-name-input" value="${state.userNames[i]}" onchange="updateUserName(${i}, this.value)" maxlength="6">`;
+function renderDishes(){
+  var menu=state.todayMenu;
+  var html="";
+  for(var i=0;i<menu.length;i++){
+    var dish=menu[i];
+    var avg=computeDishAvg(dish.id);
+    var avgText=avg!==null?"历史均分 "+avg.toFixed(1):"暂无评分";
+    var lockedClass=state.confirmed?"locked":"";
+    html+='<div class="dish-card '+dish.type+" "+lockedClass+'" onclick="swapDish('+i+')">'+
+      '<div class="dish-card-label">'+(dish.type==="meat"?"荤菜":"素菜")+'</div>'+
+      '<span class="dish-emoji">'+dish.emoji+'</span>'+
+      '<div class="dish-name">'+dish.name+'</div>'+
+      '<div class="dish-desc">'+dish.desc+'</div>'+
+      '<div class="dish-avg-score"><span class="score-dot"></span>'+avgText+'</div>'+
+      '<div class="swap-hint">&#x21BB; 点击换菜</div>'+
+    '</div>';
   }
+  document.getElementById("dishCards").innerHTML=html;
 }
 
-function updateUserName(idx, val) {
-  state.userNames[idx] = val.trim() || (idx === 0 ? "天天" : "青蛙");
-  document.getElementById(`name${idx}-display`).textContent = state.userNames[idx];
+function swapDish(idx){
+  if(state.confirmed)return;
+  var currentDish=state.todayMenu[idx];
+  var pool=currentDish.type==="meat"?MEAT_DISHES:VEG_DISHES;
+  var excludeIds=[currentDish.id];
+  var otherDish=state.todayMenu[1-idx];
+  if(otherDish&&otherDish.type===currentDish.type)excludeIds.push(otherDish.id);
+  var newDish=weightedRandom(pool,excludeIds);
+  state.todayMenu[idx]=newDish;
+  state.confirmed=false;
   saveStateToStorage();
+  renderAll();
+  showToast(newDish.name+" 换好了~");
 }
 
-function renderStars() {
-  for (let di = 0; di < 2; di++) {
-    const key = `d${di}`;
-    const val = state.currentRatings[state.currentUser][key] || 0;
-    let html = "";
-    for (let s = 1; s <= 10; s++) {
-      html += `<div class="star ${s <= val ? "active" : ""}" onclick="setStar(${di},${s})" title="${s}分">
-        ${s <= val ? "★" : "☆"}
-      </div>`;
-    }
-    const dishName = state.todayMenu ? state.todayMenu[di].name : "";
-    document.getElementById(`stars${di}`).innerHTML = html;
-    document.getElementById(`val${di}`).textContent = val > 0 ? val : "-";
+function renderConfirmBadge(){
+  var badge=document.getElementById("confirmBadge");
+  if(state.confirmed){
+    badge.className="confirm-badge confirmed";
+    badge.textContent="已确认";
+  } else {
+    badge.className="confirm-badge pending";
+    badge.textContent="待确认";
   }
+  var btn=document.getElementById("confirmBtnMain");
+  btn.disabled=state.confirmed;
+  btn.textContent=state.confirmed?"今日菜谱已确认":"确认今日菜谱";
 }
 
-function setStar(dishIdx, score) {
-  const key = `d${dishIdx}`;
-  state.currentRatings[state.currentUser][key] = score;
+function confirmMenu(){
+  if(state.confirmed)return;
+  state.confirmed=true;
+  saveStateToStorage();
+  renderAll();
+  showToast("今日菜谱已确认，不可再更换！");
+}
+
+function renderRatingGroups(){
+  if(!state.todayMenu)return;
+  var dish0=state.todayMenu[0],dish1=state.todayMenu[1];
+  var t0=document.getElementById("dish0TypeTag"),t1=document.getElementById("dish1TypeTag");
+  t0.textContent=dish0.type==="meat"?"荤菜":"素菜";
+  t0.className="dish-type-tag "+dish0.type;
+  t1.textContent=dish1.type==="meat"?"荤菜":"素菜";
+  t1.className="dish-type-tag "+dish1.type;
+  document.getElementById("dish0NameLabel").textContent=dish0.name;
+  document.getElementById("dish1NameLabel").textContent=dish1.name;
+  document.getElementById("ratingLabel0").value=state.userNames[0];
+  document.getElementById("ratingLabel1").value=state.userNames[1];
+}
+
+function renderStars(){
+  for(var di=0;di<2;di++){
+    var key="d"+di;
+    var val=state.currentRatings[state.currentUser][key]||0;
+    var html="";
+    for(var s=1;s<=10;s++){
+      html+='<div class="star '+(s<=val?"active":"")+'" onclick="setStar('+di+","+s+')" title="'+s+'分">'+(s<=val?"★":"☆")+'</div>';
+    }
+    document.getElementById("stars"+di).innerHTML=html;
+    document.getElementById("val"+di).textContent=val>0?val:"-";
+    document.getElementById("saved"+di).textContent=val>0?"★":"";
+  }
+  renderDishRatingSummary();
+}
+
+function renderDishRatingSummary(){
+  if(!state.todayMenu)return;
+  var html="";
+  for(var u=0;u<2;u++){
+    var r=state.currentRatings[u];
+    var d0=r.d0>0?r.d0:"-";
+    var d1=r.d1>0?r.d1:"-";
+    var d0s=state.ratings[state.today]&&state.ratings[state.today][u]&&state.ratings[state.today][u].d0>0?"":"";
+    var d1s=state.ratings[state.today]&&state.ratings[state.today][u]&&state.ratings[state.today][u].d1>0?"":"";
+    html+='<div class="dish-rating-summary-row">'+
+      '<span class="user-label">'+state.userNames[u]+'</span>'+
+      '<span>荤:'+d0+'</span>'+
+      '<span>素:'+d1+'</span>'+
+    '</div>';
+  }
+  document.getElementById("dishRatingSummary").innerHTML=html;
+}
+
+function setStar(dishIdx,score){
+  var key="d"+dishIdx;
+  state.currentRatings[state.currentUser][key]=score;
   renderStars();
 }
 
-function switchUser(uid) {
-  state.currentUser = uid;
-  document.getElementById("tab0").classList.toggle("active", uid === 0);
-  document.getElementById("tab1").classList.toggle("active", uid === 1);
+function switchUser(uid){
+  state.currentUser=uid;
+  document.getElementById("tab0").className="user-tab"+(uid===0?" active":"");
+  document.getElementById("tab1").className="user-tab"+(uid===1?" active":"");
   renderStars();
 }
 
-function loadTodayRatings() {
-  const todayData = (state.ratings[state.today] || {});
-  for (let u = 0; u < 2; u++) {
-    state.currentRatings[u] = {
-      d0: todayData[u] ? (todayData[u].d0 || 0) : 0,
-      d1: todayData[u] ? (todayData[u].d1 || 0) : 0,
+function loadTodayRatings(){
+  var todayData=state.ratings[state.today]||{};
+  for(var u=0;u<2;u++){
+    state.currentRatings[u]={
+      d0:todayData[u]?(todayData[u].d0||0):0,
+      d1:todayData[u]?(todayData[u].d1||0):0
     };
   }
 }
 
-function saveRatings() {
-  const u = state.currentUser;
-  const r = state.currentRatings[u];
-  if (r.d0 === 0 && r.d1 === 0) {
+function saveRatings(){
+  var u=state.currentUser;
+  var r=state.currentRatings[u];
+  if(r.d0===0&&r.d1===0){
     showToast("请至少给一道菜打分 ~");
     return;
   }
-  if (!state.ratings[state.today]) state.ratings[state.today] = {};
-  state.ratings[state.today][u] = { d0: r.d0, d1: r.d1 };
-
-  // 更新菜肴累计分数 (用于权重计算)
-  state.todayMenu.forEach((dish, i) => {
-    const score = r[`d${i}`];
-    if (score > 0) {
-      if (!state.dishScores[dish.id]) state.dishScores[dish.id] = [];
-      // 避免同一用户同天重复累计
-      const already = state.dishScores[dish.id]._markedThisDay?.[`${state.today}_u${u}_d${i}`];
-      if (!already) {
+  if(!state.ratings[state.today])state.ratings[state.today]={};
+  state.ratings[state.today][u]={d0:r.d0,d1:r.d1};
+  state.todayMenu.forEach(function(dish,i){
+    var score=r["d"+i];
+    if(score>0){
+      if(!state.dishScores[dish.id])state.dishScores[dish.id]=[];
+      var mark=state.today+"_u"+u+"_d"+i;
+      if(!dish._m)dish._m={};
+      if(!dish._m[mark]){
         state.dishScores[dish.id].push(score);
-        if (!state.dishScores[dish.id]._markedThisDay) state.dishScores[dish.id]._markedThisDay = {};
-        state.dishScores[dish.id]._markedThisDay[`${state.today}_u${u}_d${i}`] = true;
+        dish._m[mark]=true;
       }
     }
   });
-
   saveStateToStorage();
-  renderDishes();
-  renderTopDishes();
-  renderHistory();
-  showToast("评分已保存！下次菜谱将参考你的口味 🎉");
+  renderAll();
+  showToast("评分已保存！");
 }
 
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2500);
+function showToast(msg){
+  var t=document.getElementById("toast");
+  t.textContent=msg;
+  t.className="toast show";
+  setTimeout(function(){t.className="toast";},2500);
 }
 
-function renderTopDishes() {
-  const dishList = DISHES.map(d => ({
-    ...d,
-    avg: computeDishAvg(d.id) || 0,
-    count: (state.dishScores[d.id] || []).length
-  })).filter(d => d.count > 0).sort((a, b) => b.avg - a.avg).slice(0, 6);
+function renderTopDishes(){
+  var dishList=DISHES.map(function(d){
+    return {
+      id:d.id,name:d.name,emoji:d.emoji,type:d.type,
+      avg:computeDishAvg(d.id)||0,
+      count:(state.dishScores[d.id]||[]).length
+    };
+  }).filter(function(d){return d.count>0;})
+    .sort(function(a,b){return b.avg-a.avg;})
+    .slice(0,6);
 
-  if (dishList.length === 0) {
-    document.getElementById("topDishes").innerHTML = `<div style="font-size:13px;color:#888780;grid-column:1/-1;padding:8px 0">评分后将在这里显示最受欢迎菜肴</div>`;
+  if(dishList.length===0){
+    document.getElementById("topDishes").innerHTML='<div style="font-size:13px;color:#888780;grid-column:1/-1;padding:8px 0">评分后将在这里显示最受欢迎菜肴</div>';
     return;
   }
-  document.getElementById("topDishes").innerHTML = dishList.map(d =>
-    `<div class="top-dish-item">
-      <span class="top-dish-emoji">${d.emoji}</span>
-      <div class="top-dish-name">${d.name}</div>
-      <div class="top-dish-score">均分 ${d.avg.toFixed(1)}</div>
-    </div>`
-  ).join("");
+  var html="";
+  for(var i=0;i<dishList.length;i++){
+    var d=dishList[i];
+    html+='<div class="top-dish-item">'+
+      '<span style="font-size:22px;display:block;margin-bottom:4px;">'+d.emoji+'</span>'+
+      '<div style="color:#2c2c2a;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+d.name+'</div>'+
+      '<div style="color:#BA7517;margin-top:2px;">均分 '+d.avg.toFixed(1)+'</div>'+
+    '</div>';
+  }
+  document.getElementById("topDishes").innerHTML=html;
 }
 
-function renderHistory() {
-  const dates = Object.keys(state.ratings).sort((a, b) => b.localeCompare(a));
-  if (dates.length === 0) {
-    document.getElementById("historyList").innerHTML = `<div style="font-size:13px;color:#888780;padding:8px 0">暂无记录</div>`;
+function renderHistory(){
+  var dates=Object.keys(state.ratings).sort(function(a,b){return b.localeCompare(a);});
+  if(dates.length===0){
+    document.getElementById("historyList").innerHTML='<div style="font-size:13px;color:#888780;padding:8px 0">暂无记录</div>';
     return;
   }
-  document.getElementById("historyList").innerHTML = dates.slice(0, 14).map(date => {
-    const dateRatings = state.ratings[date];
-    let scoreStr = "";
-    for (let u = 0; u < 2; u++) {
-      if (dateRatings[u]) {
-        const r = dateRatings[u];
-        scoreStr += `${state.userNames[u]}:${r.d0||'-'}/${r.d1||'-'} `;
+  var html="";
+  for(var i=0;i<Math.min(dates.length,14);i++){
+    var date=dates[i];
+    var dateRatings=state.ratings[date];
+    var scoreStr="";
+    for(var u=0;u<2;u++){
+      if(dateRatings[u]){
+        var r=dateRatings[u];
+        var uScores=[];
+        if(r.d0>0)uScores.push("荤"+r.d0);
+        if(r.d1>0)uScores.push("素"+r.d1);
+        if(uScores.length>0)scoreStr+=state.userNames[u]+":"+uScores.join("/")+" ";
       }
     }
-    const menuKey = `menu_${date}`;
-    const storedMenu = JSON.parse(localStorage.getItem("menuApp_state") || "{}");
-    return `<div class="history-item">
-      <div class="history-date">${date.slice(5)}</div>
-      <div class="history-dishes">已评分</div>
-      <div class="history-scores">${scoreStr}</div>
-    </div>`;
-  }).join("");
+    html+='<div class="history-item">'+
+      '<div class="history-date">'+date.slice(5)+'</div>'+
+      '<div class="history-scores">'+scoreStr+'</div>'+
+    '</div>';
+  }
+  document.getElementById("historyList").innerHTML=html;
 }
 
-function toggleHistory() {
-  const el = document.getElementById("historyList");
-  const btn = document.querySelector(".history-toggle");
-  if (el.style.display === "none") {
-    el.style.display = "";
-    btn.textContent = "收起";
+function toggleHistory(){
+  var el=document.getElementById("historyList");
+  var btn=document.querySelector(".history-toggle");
+  if(el.style.display==="none"){
+    el.style.display="";
+    btn.textContent="收起";
     renderHistory();
   } else {
-    el.style.display = "none";
-    btn.textContent = "展开";
+    el.style.display="none";
+    btn.textContent="展开";
   }
 }
 
-function refreshDishes() {
-  if (!confirm("换掉今天的菜谱？（评分不受影响）")) return;
-  pickTodayMenu(true);
-  saveStateToStorage();
-  renderDishes();
-  loadTodayRatings();
-  renderStars();
-  showToast("已换新菜谱~");
+function renderUserNames(){
+  document.getElementById("name0-display").textContent=state.userNames[0];
+  document.getElementById("name1-display").textContent=state.userNames[1];
 }
 
-function init() {
+function updateUserName(idx,val){
+  state.userNames[idx]=val.trim()||(idx===0?"天天":"青蛙");
+  document.getElementById("name"+idx+"-display").textContent=state.userNames[idx];
+  document.getElementById("ratingLabel"+idx).value=state.userNames[idx];
+  renderDishRatingSummary();
+  saveStateToStorage();
+}
+
+function renderAll(){
+  renderDate();
+  renderConfirmBadge();
+  renderDishes();
+  renderUserNames();
+  renderRatingGroups();
+  loadTodayRatings();
+  renderStars();
+  renderTopDishes();
+}
+
+function init(){
   loadState();
   pickTodayMenu(false);
   saveStateToStorage();
-  renderDate();
-  renderDishes();
-  renderUserNames();
-  loadTodayRatings();
-  renderStars();
-  renderTopDishes();
+  renderAll();
 }
 
 init();
