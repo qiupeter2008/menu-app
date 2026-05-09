@@ -34,6 +34,17 @@
   }
   .header h1 { font-size: 17px; font-weight: 500; color: #2c2c2a; }
   .header p { font-size: 12px; color: #5f5e5a; }
+  .sync-status {
+    margin-left: auto;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sync-status.synced { background: #EAF3DE; color: #27500A; }
+  .sync-status.syncing { background: #FFF3CD; color: #856404; }
+  .sync-status.error { background: #FFE0E0; color: #8B1A1A; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
   .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 80px; }
 
@@ -56,7 +67,6 @@
   .confirm-badge.confirmed { background: #EAF3DE; color: #27500A; border: 0.5px solid #639922; }
   .confirm-badge.pending { background: #FAEEDA; color: #854F0B; border: 0.5px solid #BA7517; }
 
-  /* 菜谱卡片：始终两列 */
   .dish-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
   .dish-card {
     background: #fff;
@@ -92,14 +102,8 @@
     margin-top: 8px; font-size: 11px; color: #5f5e5a;
     display: flex; align-items: center; gap: 4px;
   }
-  .score-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #FAC775; display: inline-block;
-  }
-  .swap-hint {
-    margin-top: 6px; font-size: 11px; color: #888780;
-    display: flex; align-items: center; gap: 3px;
-  }
+  .score-dot { width: 8px; height: 8px; border-radius: 50%; background: #FAC775; display: inline-block; }
+  .swap-hint { margin-top: 6px; font-size: 11px; color: #888780; display: flex; align-items: center; gap: 3px; }
   .dish-card.locked .swap-hint { display: none; }
 
   .confirm-btn-main {
@@ -110,7 +114,6 @@
   .confirm-btn-main:active { transform: scale(0.98); }
   .confirm-btn-main:disabled { background: #ccc; cursor: default; transform: none; }
 
-  /* 评分区域：两列并排 */
   .rating-section {
     background: #fff;
     border-radius: 14px;
@@ -119,24 +122,9 @@
     margin-bottom: 16px;
   }
   .rating-section h2 { font-size: 14px; font-weight: 500; color: #2c2c2a; margin-bottom: 14px; }
-
-  .rating-users-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .rating-user-col {
-    background: #f9f7f3;
-    border-radius: 10px;
-    padding: 10px 8px;
-  }
-  .rating-user-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
+  .rating-users-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .rating-user-col { background: #f9f7f3; border-radius: 10px; padding: 10px 8px; }
+  .rating-user-header { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
   .user-name-input {
     background: transparent; border: none;
     border-bottom: 1px dashed rgba(0,0,0,0.2);
@@ -144,19 +132,12 @@
     width: 56px; text-align: center; outline: none; padding: 0 2px;
   }
   .user-name-input:focus { border-bottom-color: #639922; }
-
   .rating-dish-row { margin-bottom: 8px; }
   .rating-dish-row:last-child { margin-bottom: 0; }
-  .rating-dish-label {
-    font-size: 11px; color: #888780; margin-bottom: 3px;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .dish-type-tag {
-    font-size: 11px; padding: 1px 6px; border-radius: 10px; font-weight: 500;
-  }
+  .rating-dish-label { font-size: 11px; color: #888780; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
+  .dish-type-tag { font-size: 11px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }
   .dish-type-tag.meat { background: #FAECE7; color: #993C1D; }
   .dish-type-tag.veg { background: #EAF3DE; color: #3B6D11; }
-
   .rating-stars-row { display: flex; align-items: center; gap: 3px; }
   .star {
     width: 20px; height: 20px; cursor: pointer; border-radius: 5px;
@@ -165,7 +146,7 @@
     background: #F1EFE8; transition: all 0.1s; user-select: none;
   }
   .star.active { background: #FAEEDA; border-color: #EF9F27; }
-  .star:hover { background: #FAC775; transform: scale(1.1); }
+  .star:hover { background: #FAC775; }
   .rating-val { font-size: 12px; font-weight: 500; color: #BA7517; width: 22px; text-align: center; }
 
   .dish-rating-summary {
@@ -175,7 +156,6 @@
   }
   .dish-rating-summary-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
   .dish-rating-summary-row .user-label { color: #888780; width: 38px; }
-  .dish-rating-summary-row .user-score { color: #BA7517; font-weight: 500; }
 
   .confirm-btn-save {
     width: 100%; padding: 12px; background: #185FA5; color: #fff;
@@ -183,35 +163,29 @@
     cursor: pointer;
   }
   .confirm-btn-save:active { transform: scale(0.98); }
+  .confirm-btn-save:disabled { background: #aaa; cursor: default; }
 
-  /* 历史最受欢迎：两列按人分 */
   .history-section {
     background: #fff; border-radius: 14px;
     border: 0.5px solid rgba(0,0,0,0.1);
-    padding: 18px;
-    margin-bottom: 16px;
+    padding: 18px; margin-bottom: 16px;
   }
   .history-section h2 { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
   .top-dishes-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .top-dishes-col { }
   .top-dishes-col-title {
     font-size: 13px; font-weight: 500; color: #2c2c2a;
     margin-bottom: 8px; text-align: center;
     padding-bottom: 6px;
     border-bottom: 0.5px solid rgba(0,0,0,0.07);
   }
-  .top-dish-item {
-    background: #F1EFE8; border-radius: 10px; padding: 8px 6px;
-    text-align: center; font-size: 12px; margin-bottom: 6px;
-  }
+  .top-dish-item { background: #F1EFE8; border-radius: 10px; padding: 8px 6px; text-align: center; font-size: 12px; margin-bottom: 6px; }
   .top-dish-item:last-child { margin-bottom: 0; }
   .top-dish-item .top-dish-emoji { font-size: 20px; display: block; margin-bottom: 2px; }
   .top-dish-item .top-dish-name { color: #2c2c2a; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
   .top-dish-item .top-dish-score { color: #BA7517; margin-top: 1px; font-size: 11px; }
 
-  /* 历史记录：直接显示 */
   .history-list { margin-top: 4px; }
-  .history-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.07); font-size: 13px; }
+  .history-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.07); }
   .history-item:last-child { border-bottom: none; }
   .history-date { color: #888780; width: 60px; flex-shrink: 0; font-size: 12px; padding-top: 1px; }
   .history-dishes { flex: 1; color: #2c2c2a; font-size: 12px; }
@@ -246,6 +220,10 @@
     <h1>小学生每日菜谱</h1>
     <p>荤素搭配 · 营养均衡</p>
   </div>
+  <div class="sync-status syncing" id="syncStatus">
+    <span class="sync-dot"></span>
+    <span id="syncText">连接中…</span>
+  </div>
 </div>
 
 <div class="container">
@@ -265,7 +243,7 @@
     <h2>今日评分</h2>
     <div class="rating-users-row" id="ratingUsersRow"></div>
     <div class="dish-rating-summary" id="dishRatingSummary"></div>
-    <button class="confirm-btn-save" onclick="saveRatings()">保存评分</button>
+    <button class="confirm-btn-save" id="saveBtn" onclick="saveRatings()">保存评分</button>
   </div>
 
   <div class="history-section">
@@ -279,6 +257,44 @@
 <div class="toast" id="toast"></div>
 
 <script>
+/* ============ Supabase 配置 ============ */
+var SB_URL  = "https://ljfpefxnqfjyilkrrqb.supabase.co";
+var SB_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpamZwZWZ4bnFmanlpbGtycnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNDk5NjcsImV4cCI6MjA5MzgyNTk2N30.Q48FqOATCQYkXbOldMDt4yApBxU-jfpYJu2fao_s1AU";
+
+function sbHeaders(extra){
+  var h = {
+    "apikey": SB_ANON,
+    "Authorization": "Bearer " + SB_ANON,
+    "Content-Type": "application/json"
+  };
+  if(extra) Object.assign(h, extra);
+  return h;
+}
+
+/* 从云端加载今天的数据 */
+function cloudLoad(date){
+  return fetch(SB_URL + "/rest/v1/menu_data?date=eq." + date + "&select=*", {
+    headers: sbHeaders()
+  }).then(function(r){ return r.json(); });
+}
+
+/* 从云端加载所有历史数据 */
+function cloudLoadAll(){
+  return fetch(SB_URL + "/rest/v1/menu_data?select=*&order=date.desc&limit=30", {
+    headers: sbHeaders()
+  }).then(function(r){ return r.json(); });
+}
+
+/* 写入/更新云端数据（upsert） */
+function cloudSave(row){
+  return fetch(SB_URL + "/rest/v1/menu_data", {
+    method: "POST",
+    headers: sbHeaders({ "Prefer": "resolution=merge-duplicates,return=minimal" }),
+    body: JSON.stringify(row)
+  });
+}
+
+/* ============ 菜库 ============ */
 var DISHES = [
   {id:1,name:"红烧肉",type:"meat",emoji:"🥩",desc:"软糯入味，富含蛋白质"},
   {id:2,name:"糖醋排骨",type:"meat",emoji:"🍖",desc:"酸甜可口，小朋友最爱"},
@@ -307,51 +323,98 @@ var DISHES = [
 ];
 
 var MEAT_DISHES = DISHES.filter(function(d){ return d.type==="meat"; });
-var VEG_DISHES = DISHES.filter(function(d){ return d.type==="veg"; });
+var VEG_DISHES  = DISHES.filter(function(d){ return d.type==="veg"; });
 
+/* ============ 应用状态 ============ */
 var state = {
-  userNames: ["天天", "青蛙"],
-  today: getToday(),
-  todayMenu: null,
-  confirmed: false,
-  ratings: {},
-  dishScores: {},
-  currentRatings: { 0:{d0:0,d1:0}, 1:{d0:0,d1:0} },
-  _savedMarks: {}
+  userNames:     ["天天", "青蛙"],
+  today:         getToday(),
+  todayMenu:     null,
+  confirmed:     false,
+  ratings:       {},        // date -> {menu:[id0,id1], 0:{d0,d1}, 1:{d0,d1}}
+  dishScores:    {},        // dishId -> [{u, s}]
+  currentRatings:{ 0:{d0:0,d1:0}, 1:{d0:0,d1:0} },
+  _savedMarks:   {}
 };
 
 function getToday(){ var d=new Date(); return d.toISOString().slice(0,10); }
 
-function loadState(){
+/* ============ 本地缓存（兜底） ============ */
+function cacheLoad(){
   try {
-    var raw = localStorage.getItem("menuApp_state_v3");
+    var raw = localStorage.getItem("menuApp_cache_v4");
     if(!raw) return;
     var s = JSON.parse(raw);
-    state.userNames  = s.userNames || ["天天","青蛙"];
-    state.ratings    = s.ratings || {};
+    state.userNames  = s.userNames  || ["天天","青蛙"];
+    state.ratings    = s.ratings    || {};
     state.dishScores = s.dishScores || {};
-    state.confirmed  = s.confirmed || false;
     if(s.todayMenu && s.todayDate === state.today){
       state.todayMenu = s.todayMenu;
-    } else {
-      state.confirmed = false;
+      state.confirmed = s.confirmed || false;
     }
   } catch(e){}
 }
 
-function saveStateToStorage(){
-  var toSave = {
-    userNames: state.userNames,
-    ratings: state.ratings,
-    dishScores: state.dishScores,
-    todayMenu: state.todayMenu,
-    todayDate: state.today,
-    confirmed: state.confirmed
-  };
-  localStorage.setItem("menuApp_state_v3", JSON.stringify(toSave));
+function cacheSave(){
+  try {
+    localStorage.setItem("menuApp_cache_v4", JSON.stringify({
+      userNames:  state.userNames,
+      ratings:    state.ratings,
+      dishScores: state.dishScores,
+      todayMenu:  state.todayMenu,
+      todayDate:  state.today,
+      confirmed:  state.confirmed
+    }));
+  } catch(e){}
 }
 
-/* 推荐权重：用该菜所有评分的均分 */
+/* ============ 云端数据 → state ============ */
+function applyCloudRow(row){
+  if(!row || !row.date) return;
+  var date = row.date;
+  /* ratings */
+  if(row.ratings){
+    state.ratings[date] = row.ratings;
+  }
+  /* dish_scores：合并（云端权威） */
+  if(row.dish_scores){
+    state.dishScores = row.dish_scores;
+  }
+  /* 今天的菜谱和确认状态 */
+  if(date === state.today){
+    if(row.today_menu && row.today_menu.length === 2){
+      state.todayMenu = row.today_menu;
+    }
+    if(typeof row.confirmed === "boolean"){
+      state.confirmed = row.confirmed;
+    }
+    if(row.user_names && row.user_names.length === 2){
+      state.userNames = row.user_names;
+    }
+  }
+}
+
+/* ============ state → 云端行 ============ */
+function buildCloudRow(){
+  return {
+    date:        state.today,
+    today_menu:  state.todayMenu,
+    confirmed:   state.confirmed,
+    user_names:  state.userNames,
+    ratings:     state.ratings,
+    dish_scores: state.dishScores,
+    updated_at:  new Date().toISOString()
+  };
+}
+
+/* ============ 同步状态指示 ============ */
+function setSyncStatus(s, text){
+  var el2 = el("syncStatus");
+  el2.className = "sync-status " + s;
+  el("syncText").textContent = text;
+}
+
+/* ============ 推荐算法 ============ */
 function getDishWeight(dish){
   var entries = state.dishScores[dish.id] || [];
   if(entries.length === 0) return 1;
@@ -378,48 +441,45 @@ function pickTodayMenu(forceNew){
 }
 
 /* ============ 渲染 ============ */
-
 function renderDate(){
   var d = new Date();
   var days = ["周日","周一","周二","周三","周四","周五","周六"];
-  var dateStr = d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
-  el("dateMain").textContent = dateStr;
-  el("dateSub").textContent = days[d.getDay()] + "  今日菜谱已推荐";
+  el("dateMain").textContent = d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
+  el("dateSub").textContent  = days[d.getDay()] + "  今日菜谱已推荐";
 }
 
 function renderDishes(){
-  var menu = state.todayMenu;
+  if(!state.todayMenu) return;
   var html = "";
-  for(var i=0; i<menu.length; i++){
-    var dish = menu[i];
-    var avg = computeDishAvg(dish.id);
+  for(var i=0; i<state.todayMenu.length; i++){
+    var dish = state.todayMenu[i];
+    var avg  = computeDishAvg(dish.id);
     var avgText = avg !== null ? "均分 "+avg.toFixed(1) : "暂无评分";
     var lockedClass = state.confirmed ? "locked" : "";
     html += '<div class="dish-card '+dish.type+' '+lockedClass+'" onclick="swapDish('+i+')">'
-      + '<div class="dish-card-label">'+(dish.type==="meat"?"荤菜":"素菜")+'</div>'
-      + '<span class="dish-emoji">'+dish.emoji+'</span>'
-      + '<div class="dish-name">'+dish.name+'</div>'
-      + '<div class="dish-desc">'+dish.desc+'</div>'
-      + '<div class="dish-avg-score"><span class="score-dot"></span>'+avgText+'</div>'
-      + '<div class="swap-hint">&#x21BB; 点击换菜</div>'
-      + '</div>';
+          + '<div class="dish-card-label">'+(dish.type==="meat"?"荤菜":"素菜")+'</div>'
+          + '<span class="dish-emoji">'+dish.emoji+'</span>'
+          + '<div class="dish-name">'+dish.name+'</div>'
+          + '<div class="dish-desc">'+dish.desc+'</div>'
+          + '<div class="dish-avg-score"><span class="score-dot"></span>'+avgText+'</div>'
+          + '<div class="swap-hint">&#x21BB; 点击换菜</div>'
+          + '</div>';
   }
   el("dishCards").innerHTML = html;
 }
 
 function swapDish(idx){
   if(state.confirmed) return;
-  var currentDish = state.todayMenu[idx];
-  var pool = currentDish.type==="meat" ? MEAT_DISHES : VEG_DISHES;
-  var excludeIds = [currentDish.id];
+  var cur = state.todayMenu[idx];
+  var pool = cur.type==="meat" ? MEAT_DISHES : VEG_DISHES;
+  var excl = [cur.id];
   var other = state.todayMenu[1-idx];
-  if(other && other.type === currentDish.type) excludeIds.push(other.id);
-  var newDish = weightedRandom(pool, excludeIds);
-  state.todayMenu[idx] = newDish;
+  if(other && other.type === cur.type) excl.push(other.id);
+  state.todayMenu[idx] = weightedRandom(pool, excl);
   state.confirmed = false;
-  saveStateToStorage();
+  syncToCloud();
   renderAll();
-  showToast(newDish.name + " 换好了~");
+  showToast(state.todayMenu[idx].name + " 换好了~");
 }
 
 function renderConfirmBadge(){
@@ -432,44 +492,41 @@ function renderConfirmBadge(){
     badge.textContent = "待确认";
   }
   var btn = el("confirmBtnMain");
-  btn.disabled = state.confirmed;
+  btn.disabled    = state.confirmed;
   btn.textContent = state.confirmed ? "今日菜谱已确认" : "确认今日菜谱";
 }
 
 function confirmMenu(){
   if(state.confirmed) return;
   state.confirmed = true;
-  saveStateToStorage();
+  syncToCloud();
   renderAll();
   showToast("今日菜谱已确认，不可再更换！");
 }
 
-/* ============ 评分区域（两人并排） ============ */
-
+/* ============ 评分区域 ============ */
 function renderRatingArea(){
   if(!state.todayMenu) return;
   var menu = state.todayMenu;
   var html = "";
   for(var u=0; u<2; u++){
     html += '<div class="rating-user-col">'
-      + '<div class="rating-user-header">'
-      + '<input class="user-name-input" value="'+esc(state.userNames[u])+'" onchange="updateUserName('+u+',this.value)" maxlength="6">'
-      + '</div>';
+          + '<div class="rating-user-header">'
+          + '<input class="user-name-input" value="'+esc(state.userNames[u])+'" onchange="updateUserName('+u+',this.value)" maxlength="6">'
+          + '</div>';
     for(var di=0; di<2; di++){
       var dish = menu[di];
-      var val = state.currentRatings[u]["d"+di] || 0;
+      var val  = state.currentRatings[u]["d"+di] || 0;
       html += '<div class="rating-dish-row">'
-        + '<div class="rating-dish-label">'
-        + '<span class="dish-type-tag '+dish.type+'">'+(dish.type==="meat"?"荤":"素")+'</span>'
-        + '<span style="font-size:12px;color:#2c2c2a">'+dish.name+'</span>'
-        + '</div>'
-        + '<div class="rating-stars-row">';
+            + '<div class="rating-dish-label">'
+            + '<span class="dish-type-tag '+dish.type+'">'+(dish.type==="meat"?"荤":"素")+'</span>'
+            + '<span style="font-size:12px;color:#2c2c2a">'+dish.name+'</span>'
+            + '</div>'
+            + '<div class="rating-stars-row">';
       for(var s=1; s<=10; s++){
         html += '<div class="star '+(s<=val?"active":"")+'" onclick="setStar('+u+','+di+','+s+')">'+(s<=val?"★":"☆")+'</div>';
       }
-      html += '<span class="rating-val">'+(val>0?val:"-")+'</span>'
-        + '</div>'
-        + '</div>';
+      html += '<span class="rating-val">'+(val>0?val:"-")+'</span></div></div>';
     }
     html += '</div>';
   }
@@ -486,7 +543,7 @@ function updateUserName(idx, val){
   state.userNames[idx] = (val||"").trim() || (idx===0?"天天":"青蛙");
   renderRatingArea();
   renderTopDishesCols();
-  saveStateToStorage();
+  syncToCloud();
 }
 
 function renderDishRatingSummary(){
@@ -495,16 +552,15 @@ function renderDishRatingSummary(){
   for(var u=0; u<2; u++){
     var r = state.currentRatings[u];
     html += '<div class="dish-rating-summary-row">'
-      + '<span class="user-label">'+state.userNames[u]+'</span>'
-      + '<span>荤:'+(r.d0>0?r.d0:"-")+'</span>'
-      + '<span>素:'+(r.d1>0?r.d1:"-")+'</span>'
-      + '</div>';
+          + '<span class="user-label">'+state.userNames[u]+'</span>'
+          + '<span>荤:'+(r.d0>0?r.d0:"-")+'</span>'
+          + '<span>素:'+(r.d1>0?r.d1:"-")+'</span>'
+          + '</div>';
   }
   el("dishRatingSummary").innerHTML = html;
 }
 
 /* ============ 保存评分 ============ */
-
 function loadTodayRatings(){
   var td = state.ratings[state.today];
   for(var u=0; u<2; u++){
@@ -524,7 +580,7 @@ function saveRatings(){
     hasAny = true;
     if(!state.ratings[state.today]) state.ratings[state.today] = {};
     state.ratings[state.today].menu = [state.todayMenu[0].id, state.todayMenu[1].id];
-    state.ratings[state.today][u] = { d0:r.d0, d1:r.d1 };
+    state.ratings[state.today][u]   = { d0:r.d0, d1:r.d1 };
     for(var di=0; di<2; di++){
       var score = r["d"+di];
       if(score > 0){
@@ -538,30 +594,80 @@ function saveRatings(){
       }
     }
   }
-  if(!hasAny){
-    showToast("请至少给一道菜打分~");
-    return;
-  }
-  saveStateToStorage();
-  renderAll();
-  showToast("评分已保存！");
+  if(!hasAny){ showToast("请至少给一道菜打分~"); return; }
+
+  el("saveBtn").disabled = true;
+  el("saveBtn").textContent = "保存中…";
+
+  syncToCloud(function(ok){
+    el("saveBtn").disabled = false;
+    el("saveBtn").textContent = "保存评分";
+    if(ok){
+      renderAll();
+      showToast("评分已保存并同步！");
+    } else {
+      cacheSave();
+      renderAll();
+      showToast("已保存本地，网络恢复后自动同步");
+    }
+  });
 }
 
-/* ============ 历史最受欢迎（按人分两列） ============ */
+/* ============ 云端同步 ============ */
+function syncToCloud(callback){
+  setSyncStatus("syncing", "同步中…");
+  cacheSave();
+  cloudSave(buildCloudRow())
+    .then(function(resp){
+      if(resp.ok || resp.status === 201 || resp.status === 200 || resp.status === 204){
+        setSyncStatus("synced", "已同步");
+        if(callback) callback(true);
+      } else {
+        return resp.text().then(function(t){
+          console.warn("Sync error:", resp.status, t);
+          setSyncStatus("error", "同步失败");
+          if(callback) callback(false);
+        });
+      }
+    })
+    .catch(function(err){
+      console.warn("Sync error:", err);
+      setSyncStatus("error", "网络异常");
+      if(callback) callback(false);
+    });
+}
 
+/* 从云端拉取所有历史，更新 state */
+function syncFromCloud(callback){
+  setSyncStatus("syncing", "连接中…");
+  cloudLoadAll()
+    .then(function(rows){
+      if(!Array.isArray(rows)){ throw new Error("bad response"); }
+      rows.forEach(function(row){ applyCloudRow(row); });
+      setSyncStatus("synced", "已同步");
+      cacheSave();
+      if(callback) callback(true);
+    })
+    .catch(function(err){
+      console.warn("Cloud load error:", err);
+      setSyncStatus("error", "无法连接云端");
+      if(callback) callback(false);
+    });
+}
+
+/* ============ 历史最受欢迎 ============ */
 function computeUserDishAvg(uid){
   var result = [];
   for(var i=0; i<DISHES.length; i++){
     var d = DISHES[i];
     var entries = state.dishScores[d.id] || [];
-    var userScores = entries.filter(function(o){ return o.u===uid; }).map(function(o){ return o.s; });
-    if(userScores.length > 0){
-      var avg = userScores.reduce(function(a,b){ return a+b; },0) / userScores.length;
+    var scores  = entries.filter(function(o){ return o.u===uid; }).map(function(o){ return o.s; });
+    if(scores.length > 0){
+      var avg = scores.reduce(function(a,b){ return a+b; },0) / scores.length;
       result.push({id:d.id, name:d.name, emoji:d.emoji, avg:avg});
     }
   }
-  result.sort(function(a,b){ return b.avg - a.avg; });
-  return result;
+  return result.sort(function(a,b){ return b.avg - a.avg; });
 }
 
 function renderTopDishesCols(){
@@ -569,17 +675,17 @@ function renderTopDishesCols(){
   for(var u=0; u<2; u++){
     var top = computeUserDishAvg(u).slice(0,3);
     html += '<div class="top-dishes-col">'
-      + '<div class="top-dishes-col-title">'+state.userNames[u]+'最爱</div>';
+          + '<div class="top-dishes-col-title">'+state.userNames[u]+'最爱</div>';
     if(top.length===0){
       html += '<div style="font-size:12px;color:#888780;text-align:center;padding:8px 0">暂无评分</div>';
     } else {
       for(var i=0; i<top.length; i++){
         var d = top[i];
         html += '<div class="top-dish-item">'
-          + '<span class="top-dish-emoji">'+d.emoji+'</span>'
-          + '<div class="top-dish-name">'+d.name+'</div>'
-          + '<div class="top-dish-score">均分 '+d.avg.toFixed(1)+'</div>'
-          + '</div>';
+              + '<span class="top-dish-emoji">'+d.emoji+'</span>'
+              + '<div class="top-dish-name">'+d.name+'</div>'
+              + '<div class="top-dish-score">均分 '+d.avg.toFixed(1)+'</div>'
+              + '</div>';
       }
     }
     html += '</div>';
@@ -587,11 +693,10 @@ function renderTopDishesCols(){
   el("topDishesCols").innerHTML = html;
 }
 
-/* ============ 历史记录（直接显示最近5天） ============ */
-
+/* ============ 历史记录 ============ */
 function renderHistory(){
   var dates = Object.keys(state.ratings).sort(function(a,b){ return b.localeCompare(a); });
-  var show = dates.slice(0, 5);
+  var show  = dates.slice(0,5);
   if(show.length === 0){
     el("historyList").innerHTML = '<div style="font-size:13px;color:#888780;padding:8px 0">暂无记录</div>';
     return;
@@ -599,8 +704,8 @@ function renderHistory(){
   var html = "";
   for(var i=0; i<show.length; i++){
     var date = show[i];
-    var dt = state.ratings[date];
-    var dishNames = ["?", "?"];
+    var dt   = state.ratings[date];
+    var dishNames = ["?","?"];
     if(dt.menu){
       var d0 = DISHES.find(function(x){ return x.id===dt.menu[0]; });
       var d1 = DISHES.find(function(x){ return x.id===dt.menu[1]; });
@@ -610,39 +715,29 @@ function renderHistory(){
     var scoreStr = "";
     for(var u=0; u<2; u++){
       if(dt[u]){
-        var r = dt[u];
-        var parts = [];
+        var r = dt[u]; var parts = [];
         if(r.d0>0) parts.push("荤"+r.d0);
         if(r.d1>0) parts.push("素"+r.d1);
         if(parts.length>0) scoreStr += state.userNames[u]+":"+parts.join("/")+" ";
       }
     }
     html += '<div class="history-item">'
-      + '<div class="history-date">'+date.slice(5)+'</div>'
-      + '<div class="history-dishes">'+dishNames.join(" / ")+'</div>'
-      + '<div class="history-scores">'+(scoreStr||"-")+'</div>'
-      + '</div>';
+          + '<div class="history-date">'+date.slice(5)+'</div>'
+          + '<div class="history-dishes">'+dishNames.join(" / ")+'</div>'
+          + '<div class="history-scores">'+(scoreStr||"-")+'</div>'
+          + '</div>';
   }
   el("historyList").innerHTML = html;
 }
 
-/* ============ 工具函数 ============ */
-
+/* ============ 工具 ============ */
 function computeDishAvg(dishId){
   var entries = state.dishScores[dishId];
   if(!entries || entries.length===0) return null;
-  var sum = entries.reduce(function(a,b){ return a+b.s; },0);
-  return sum / entries.length;
+  return entries.reduce(function(a,b){ return a+b.s; },0) / entries.length;
 }
-
-function esc(s){
-  var d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
-}
-
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
 function el(id){ return document.getElementById(id); }
-
 function showToast(msg){
   var t = el("toast");
   t.textContent = msg;
@@ -660,11 +755,36 @@ function renderAll(){
   renderHistory();
 }
 
+/* ============ 启动 ============ */
 function init(){
-  loadState();
+  /* 1. 先从本地缓存加载，立即显示 */
+  cacheLoad();
   pickTodayMenu(false);
-  saveStateToStorage();
   renderAll();
+
+  /* 2. 从云端拉取最新数据，合并后刷新 */
+  syncFromCloud(function(ok){
+    if(ok){
+      /* 云端加载成功后，再次判断今日菜谱 */
+      pickTodayMenu(false);
+      /* 若今日在云端无菜谱，把本地生成的菜谱写上去 */
+      if(state.todayMenu){
+        renderAll();
+        syncToCloud(); /* 确保今日菜谱写入云端 */
+      }
+    } else {
+      /* 网络不通，继续用本地缓存 */
+      pickTodayMenu(false);
+      renderAll();
+    }
+  });
+
+  /* 3. 每 60 秒自动刷新一次（另一人打分后能看到） */
+  setInterval(function(){
+    syncFromCloud(function(ok){
+      if(ok){ loadTodayRatings(); renderRatingArea(); renderTopDishesCols(); renderHistory(); }
+    });
+  }, 60000);
 }
 
 init();
